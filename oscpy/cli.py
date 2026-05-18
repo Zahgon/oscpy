@@ -33,18 +33,6 @@ def _send(options):
 
 
 def __dump(options):
-    def dump(address, *values):
-        print(u'{}: {}'.format(
-            address.decode('utf8'),
-            ', '.join(
-                '{}'.format(
-                    v.decode(options.encoding or 'utf8')
-                    if isinstance(v, bytes)
-                    else v
-                )
-                for v in values if values
-            )
-        ))
 
     osc = OSCThreadServer(
         encoding=options.encoding,
@@ -59,13 +47,6 @@ def __dump(options):
     return osc
 
 
-def _dump(options): # pragma: no cover
-    osc = __dump(options)
-    try:
-        while True:
-            sleep(10)
-    finally:
-        osc.stop()
 
 
 def init_parser():

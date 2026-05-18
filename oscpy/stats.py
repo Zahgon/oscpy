@@ -11,15 +11,6 @@ class Stats(object):
         self.types = types or Counter()
         super(Stats, self).__init__(**kwargs)
 
-    def to_tuple(self):
-        types = self.types
-        keys = types.keys()
-        return (
-            self.calls,
-            self.bytes,
-            self.params,
-            ''.join(keys),
-        ) + tuple(types[k] for k in keys)
 
     def __iadd__(self, other):
         assert isinstance(other, Stats)

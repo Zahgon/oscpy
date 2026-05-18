@@ -57,12 +57,12 @@ def padded(l, n=4):
 
 def parse_int(value, offset=0, **kwargs):
     """Return an int from offset in value."""
-    return INT.unpack_from(value, offset)[0], INT.size
+    pass
 
 
 def parse_float(value, offset=0, **kwargs):
     """Return a float from offset in value."""
-    return FLOAT.unpack_from(value, offset)[0], FLOAT.size
+    pass
 
 
 def parse_string(value, offset=0, encoding='', encoding_errors='strict'):
@@ -91,58 +91,43 @@ def parse_string(value, offset=0, encoding='', encoding_errors='strict'):
 
 def parse_blob(value, offset=0, **kwargs):
     """Return a blob from offset in value."""
-    size = INT.size
-    length = INT.unpack_from(value, offset)[0]
-    data = unpack_from('>%is' % length, value, offset + size)[0]
-    return data, padded(length)
+    pass
 
 
 def parse_midi(value, offset=0, **kwargs):
     """Return a MIDI tuple from offset in value.
     A valid MIDI message: (port id, status byte, data1, data2).
     """
-    val = unpack_from('>I', value, offset)[0]
-    args = tuple((val & 0xFF << 8 * i) >> 8 * i for i in range(3, -1, -1))
-    midi = MidiTuple(*args)
-    return midi, len(midi)
+    pass
 
 
 def parse_timeage(value, offset=0, **kwargs):
     """Return the 64bit OSC value as sec/nsec"""
-    sec = unpack_from('>Q', value, offset)[0]
-    return sec, 8
+    pass
 
 
 def format_midi(value):
     return sum((val & 0xFF) << 8 * (3 - pos) for pos, val in enumerate(value))
 
 
-def parse_true(*args, **kwargs):
-    return True, 0
 
 
 def format_true(value):
     return EMPTY
 
 
-def parse_false(*args, **kwargs):
-    return False, 0
 
 
 def format_false(value):
     return EMPTY
 
 
-def parse_nil(*args, **kwargs):
-    return None, 0
 
 
 def format_nil(value):
     return EMPTY
 
 
-def parse_infinitum(*args, **kwargs):
-    return INF, 0
 
 
 def format_infinitum(value):
